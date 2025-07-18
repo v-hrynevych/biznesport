@@ -95,7 +95,7 @@ Zadanie będzie oceniane na podstawie:
 
 ## ✅ Checklista przed wysłaniem
 
-- [ ] Formularz dodaje wiadomości do bazy.
+- [+] Formularz dodaje wiadomości do bazy.
 - [ ] Edycja i usuwanie działają zgodnie z wymaganiami.
 - [ ] Brak `sequelize.sync()` – użyte migracje.
 - [ ] Seeder dodaje min. 3 wiadomości.

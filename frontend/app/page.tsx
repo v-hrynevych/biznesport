@@ -1,4 +1,4 @@
-import MessageManager from "@/shared/ui/MessageManager";
+import MessageManager from "@/entities/user/ui/MessageManager";
 
 export default function Home() {
     return (

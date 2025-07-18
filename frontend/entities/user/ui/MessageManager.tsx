@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+
+import { useId,  } from "react";
 import { Trash2 } from "lucide-react";
 
-import { Button } from "./button";
-import { Card, CardContent, CardHeader } from "./card";
+import { Button } from "../../../shared/ui/button";
+import { Card, CardContent, CardHeader } from "../../../shared/ui/card";
 import {
     TableHeader,
     TableRow,
@@ -12,47 +13,34 @@ import {
     TableBody,
     TableCell,
     Table,
-} from "./table";
-import { Input } from "./input";
+} from "../../../shared/ui/table";
+import { Input } from "../../../shared/ui/input";
+import { InputForm } from "@/features/message-manager/ui/InputForm";
 
-type Message = {
-    id: number;
-    text: string;
-};
 
 export default function MessageManager() {
-    const [messages, setMessages] = useState<Message[]>([]);
-    const [input, setInput] = useState("");
-
-    const addMessage = () => {
-        if (!input.trim()) return;
-        const newMessage = {
-            id: Date.now(),
-            text: input.trim(),
-        };
-        setMessages((prev) => [newMessage, ...prev]);
-        setInput("");
-    };
-
-    const deleteMessage = (id: number) => {
-        setMessages((prev) => prev.filter((msg) => msg.id !== id));
-    };
+  
 
     return (
         <Card className="max-w-2xl mx-auto mt-10 shadow-xl rounded-2xl p-4">
             <CardContent className="space-y-4">
                 <CardHeader className="flex gap-2 p-5px">
-                    <Input
-                        onKeyUp={(e) => {
-                            if (e.key === "Enter") {
-                                addMessage();
-                            }
-                        }}
-                        placeholder="Wpisz wiadomość..."
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                    />
-                    <Button onClick={addMessage}>Dodaj</Button>
+                    {/* <h2 className="text-xl font-semibold">
+                        Zarządzanie wiadomościami
+                    </h2>
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="space-y-2"
+                    >
+                        <div className="flex gap-2 items-start">
+                            <Input
+                                placeholder="Wpisz wiadomość..."
+                                {...register("text")}
+                            />
+                            <Button type="submit">Dodaj</Button>
+                        </div>
+                    </form> */}
+                    <InputForm />
                 </CardHeader>
 
                 <Table>
@@ -63,7 +51,7 @@ export default function MessageManager() {
                             <TableHead>Akcje</TableHead>
                         </TableRow>
                     </TableHeader>
-                    <TableBody>
+                    {/* <TableBody>
                         {messages.map((msg) => {
                             return (
                                 <TableRow key={msg.id}>
@@ -94,7 +82,7 @@ export default function MessageManager() {
                                 </TableCell>
                             </TableRow>
                         )}
-                    </TableBody>
+                    </TableBody> */}
                 </Table>
             </CardContent>
         </Card>
