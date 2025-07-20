@@ -15,11 +15,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { FormSchema } from "../model/validation";
 import { useSendMessage } from "../hook/useSendMessage";
-import { useId } from "react";
 
 export function InputForm() {
     const { mutate, isPending } = useSendMessage();
-    const id = useId();
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -27,11 +25,19 @@ export function InputForm() {
         },
     });
     function onSubmit(data: z.infer<typeof FormSchema>) {
-        mutate({ id, text: data.text });
+        mutate(
+            { text: data.text },
+            {
+                onSuccess() {
+                    form.reset();
+                },
+            }
+        );
     }
     return (
-        <Form  {...form}>
-            <form id="addMessageForm"
+        <Form {...form}>
+            <form
+                id="addMessageForm"
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="max-w-md mx-auto p-6 bg-white shadow-md rounded-md"
             >

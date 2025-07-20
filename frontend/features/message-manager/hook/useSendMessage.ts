@@ -2,16 +2,13 @@ import { QueryClient, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 interface SendMessageInput {
-    id: string;
     text: string;
 }
 interface SendMessageResponse {
-    id: string;
     text: string;
 }
 
 async function sendMessageRequest({
-    id,
     text,
 }: SendMessageInput): Promise<SendMessageResponse> {
     const res = await fetch(`http://localhost:8080/api/messages/send`, {
@@ -19,7 +16,7 @@ async function sendMessageRequest({
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text, id }),
+        body: JSON.stringify({ text}),
     });
 
     if (!res.ok) {

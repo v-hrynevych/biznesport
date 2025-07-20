@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import { Message } from "../models/messege";
+import { Message } from "../models/message";
 // CREATE
 router.post("/send", async (req, res) => {
     const { text, id } = req.body;
