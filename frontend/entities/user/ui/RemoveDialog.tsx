@@ -1,4 +1,5 @@
 "use client";
+import { useRemoveMessage } from "@/features/message-manager/hook/useRemoveMessage";
 import { Button } from "@/shared/ui/button";
 import {
     DialogHeader,
@@ -17,6 +18,10 @@ interface EditDialogProps {
     id: string;
 }
 export function RemoveMessageDialog({ dialogTrigger, id }: EditDialogProps) {
+    const { mutate } = useRemoveMessage();
+    const handleSubmit = () => {
+        mutate({ id });
+    };
     return (
         <Dialog>
             <DialogTrigger asChild>{dialogTrigger}</DialogTrigger>
@@ -33,7 +38,11 @@ export function RemoveMessageDialog({ dialogTrigger, id }: EditDialogProps) {
                             Anulować
                         </Button>
                     </DialogClose>
-                    <Button variant={"default"} size={"sm"}>
+                    <Button
+                        onClick={handleSubmit}
+                        variant={"default"}
+                        size={"sm"}
+                    >
                         Usunąć
                     </Button>
                 </DialogFooter>

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 type MessageRes = {
-    id: number;
+    id: string;
     text: string;
 };
 

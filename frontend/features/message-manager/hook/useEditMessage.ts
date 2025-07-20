@@ -3,23 +3,23 @@ import { toast } from "sonner";
 
 interface EditMessageProp {
     id: string;
-    message: string;
+    text: string;
 }
 interface EditMessageResponse {
     id: string;
-    message: string;
+    text: string;
 }
 
 async function EditMessageRequest({
     id,
-    message,
+    text,
 }: EditMessageProp): Promise<EditMessageResponse> {
     const res = await fetch(`http://localhost:8080/api/messages/edit`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message, id }),
+        body: JSON.stringify({ text, id }),
     });
 
     if (!res.ok) {
@@ -36,7 +36,7 @@ export const useEditMessage = () => {
         mutationFn: EditMessageRequest,
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ["get-messeges"] });
-            toast.success(`✅ Wiadomość zmieniona na: ${data.message}`);
+            toast.success(`✅ Wiadomość zmieniona na: ${data.text}`);
         },
         onError: (error) => {
             toast.error(

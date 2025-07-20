@@ -30,8 +30,8 @@ export function InputForm() {
         mutate({ id, text: data.text });
     }
     return (
-        <Form {...form}>
-            <form
+        <Form  {...form}>
+            <form id="addMessageForm"
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="max-w-md mx-auto p-6 bg-white shadow-md rounded-md"
             >

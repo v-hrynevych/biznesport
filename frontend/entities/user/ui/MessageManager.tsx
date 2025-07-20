@@ -14,9 +14,10 @@ import {
 import { InputForm } from "@/features/message-manager/ui/InputForm";
 import { EditMessageDialog } from "./EditDialog";
 import { RemoveMessageDialog } from "./RemoveDialog";
+import { useGetMessages } from "@/features/message-manager/hook/useGetMessage";
 
 export default function MessageManager() {
-    const messages = [{ id: "1", text: "lorem ipsum" }];
+    const { data: messages } = useGetMessages();
 
     return (
         <Card className="max-w-2xl mx-auto mt-10 shadow-xl rounded-2xl p-4">
@@ -76,7 +77,7 @@ export default function MessageManager() {
                                     </TableRow>
                                 );
                             })}
-                        {messages.length === 0 && (
+                        {messages === undefined && (
                             <TableRow>
                                 <TableCell className="text-center text-muted-foreground">
                                     Brak wiadomości
