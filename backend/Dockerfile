@@ -6,10 +6,10 @@ WORKDIR /usr/src/backend
 
 COPY package*.json ./
 
-RUN npm ci
+RUN npm install
 
 COPY . .
 
 EXPOSE 8080
 
-CMD ["npm", "start"]
+CMD npx sequelize db:migrate && npx sequelize db:seed:all && node app.js

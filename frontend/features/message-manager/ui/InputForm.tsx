@@ -12,15 +12,14 @@ import { Input } from "@/shared/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
+import { FormSchema } from "../model/validation";
+import { useSendMessage } from "../hook/useSendMessage";
+import { useId } from "react";
 
-const FormSchema = z.object({
-    text: z.string().min(2, {
-        message: "Username must be at least 2 characters.",
-    }),
-});
 export function InputForm() {
+    const { mutate, isPending } = useSendMessage();
+    const id = useId();
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -28,37 +27,39 @@ export function InputForm() {
         },
     });
     function onSubmit(data: z.infer<typeof FormSchema>) {
-        toast("Nowa wiadomość została utworzona:", {
-            description: data.text,
-            action: {
-                label: "Undo",
-                onClick: () => console.log("reser"),
-            },
-        });
+        mutate({ id, text: data.text });
     }
     return (
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="w-2/3 space-y-6"
+                className="max-w-md mx-auto p-6 bg-white shadow-md rounded-md"
             >
                 <FormField
                     control={form.control}
                     name="text"
                     render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Zarządzanie wiadomościami</FormLabel>
+                        <FormItem className="grid grid-cols-1 gap-y-[5px]">
+                            <FormLabel className="text-sm font-medium text-gray-700 mb-1">
+                                Zarządzanie wiadomościami
+                            </FormLabel>
                             <FormControl>
                                 <Input
+                                    className="rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
                                     placeholder="Wpisz wiadomość..."
                                     {...field}
                                 />
                             </FormControl>
                             <FormMessage />
+                            <Button
+                                className="  py-2 px-4 rounded-md hover:bg-gray-800 transition duration-300"
+                                type="submit"
+                            >
+                                {isPending ? "wysyłanie" : "wysłać"}
+                            </Button>
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Submit</Button>
             </form>
         </Form>
     );
