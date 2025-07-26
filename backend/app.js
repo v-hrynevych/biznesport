@@ -2,13 +2,12 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { config } from "dotenv";
-import messageRoutes from "./routes/message.js";
+import messageRoutes from "./routes/messages.js";
 
 // Initialize environment variables
 config();
 const app = express();
 app.use(cors());
-const { Message } = require("../models");
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
