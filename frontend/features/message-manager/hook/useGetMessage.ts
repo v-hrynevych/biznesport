@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 type MessageRes = {
-    id: string;
+    id: number;
     text: string;
 };
 const fetchMessages = async (): Promise<MessageRes[]> => {

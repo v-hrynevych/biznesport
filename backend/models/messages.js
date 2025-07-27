@@ -10,7 +10,7 @@ export default (sequelize, DataTypes) => {
   Messages.init(
     {
       id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },

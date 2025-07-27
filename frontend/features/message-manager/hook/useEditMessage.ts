@@ -2,11 +2,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 interface EditMessageProp {
-    id: string;
+    id: number;
     text: string;
 }
 interface EditMessageResponse {
-    id: string;
+    id: number;
     text: string;
 }
 
@@ -15,7 +15,7 @@ async function EditMessageRequest({
     text,
 }: EditMessageProp): Promise<EditMessageResponse> {
     const res = await fetch(`http://localhost:8080/api/messages/edit`, {
-        method: "POST",
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
         },

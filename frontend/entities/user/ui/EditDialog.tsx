@@ -28,7 +28,7 @@ import { useEditMessage } from "@/features/message-manager/hook/useEditMessage";
 
 interface EditDialogProps {
     dialogTrigger: ReactElement;
-    id: string;
+    id: number;
     text: string;
 }
 export function EditMessageDialog({

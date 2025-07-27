@@ -15,7 +15,7 @@ import { ReactElement, useState } from "react";
 
 interface EditDialogProps {
     dialogTrigger: ReactElement;
-    id: string;
+    id: number;
 }
 export function RemoveMessageDialog({ dialogTrigger, id }: EditDialogProps) {
     const [open, setOpen] = useState(false);

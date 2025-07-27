@@ -2,7 +2,7 @@ import {  useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 interface RemoveMessageProp {
-    id: string;
+    id: number;
 }
 
 async function RemoveMessageRequest({ id }: RemoveMessageProp) {

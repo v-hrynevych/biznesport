@@ -5,8 +5,8 @@ const { Messages } = db;
 
 // CREATE
 router.post("/send", async (req, res) => {
-    const { text, id } = req.body;
-    const message = await Messages.create({ text, id });
+    const { text } = req.body;
+    const message = await Messages.create({ text });
     res.status(201).json(message);
 });
 
@@ -23,7 +23,11 @@ router.get("/get", async (req, res) => {
 
 // UPDATE
 router.put("/edit", async (req, res) => {
-    const { id, text } = req.body;
+    const { text, id } = req.body;
+
+    if (typeof id !== "number" || isNaN(id)) {
+        return res.status(400).json({ error: "Invalid id: must be a number" });
+    }
     const message = await Messages.findByPk(id);
     if (!message) return res.status(404).json({ error: "Not found" });
 
