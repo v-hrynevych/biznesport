@@ -11,19 +11,20 @@ import {
     DialogDescription,
     DialogClose,
 } from "@/shared/ui/dialog";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 
 interface EditDialogProps {
     dialogTrigger: ReactElement;
     id: string;
 }
 export function RemoveMessageDialog({ dialogTrigger, id }: EditDialogProps) {
+    const [open, setOpen] = useState(false);
     const { mutate } = useRemoveMessage();
     const handleSubmit = () => {
-        mutate({ id });
+        mutate({ id }, { onSuccess: () => setOpen(false) });
     };
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>{dialogTrigger}</DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>

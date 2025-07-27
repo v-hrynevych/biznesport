@@ -1,4 +1,4 @@
-import { QueryClient, useMutation } from "@tanstack/react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 interface SendMessageInput {
@@ -16,7 +16,7 @@ async function sendMessageRequest({
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text}),
+        body: JSON.stringify({ text }),
     });
 
     if (!res.ok) {
@@ -28,11 +28,12 @@ async function sendMessageRequest({
 }
 
 export const useSendMessage = () => {
-    const queryClient = new QueryClient();
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: sendMessageRequest,
         onSuccess: (data) => {
-            queryClient.invalidateQueries({ queryKey: ["get-messeges"] });
+            
+            queryClient.invalidateQueries({ queryKey: ["messages"] });
 
             toast.success(`✅ Wiadomość wysłana: ${data.text}`);
         },

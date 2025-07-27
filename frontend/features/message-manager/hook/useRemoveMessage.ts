@@ -1,4 +1,4 @@
-import { QueryClient, useMutation } from "@tanstack/react-query";
+import {  useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 interface RemoveMessageProp {
@@ -22,11 +22,11 @@ async function RemoveMessageRequest({ id }: RemoveMessageProp) {
 }
 
 export const useRemoveMessage = () => {
-    const queryClient = new QueryClient();
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: RemoveMessageRequest,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["get-messeges"] });
+            queryClient.invalidateQueries({ queryKey: ['messages'] });
             toast.success(`✅ Wiadomość usunięto!`);
         },
         onError: (error) => {

@@ -21,7 +21,7 @@ import {
 } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { useEditMessage } from "@/features/message-manager/hook/useEditMessage";
@@ -36,20 +36,24 @@ export function EditMessageDialog({
     text,
     id,
 }: EditDialogProps) {
+    const [open, setOpen] = useState(false);
+
     const { mutate } = useEditMessage();
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
-        defaultValues: {
+        values: {
             text: text,
         },
     });
 
     function onSubmit(data: z.infer<typeof FormSchema>) {
-        console.log(data);
-        mutate({ ...data, id: id });
+        mutate(
+            { text: data.text, id: id },
+            { onSuccess: () => setOpen(false) }
+        );
     }
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>{dialogTrigger}</DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -59,7 +63,10 @@ export function EditMessageDialog({
                     </DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)}>
+                    <form
+                        id="editMessageForm"
+                        onSubmit={form.handleSubmit(onSubmit)}
+                    >
                         <FormField
                             control={form.control}
                             name="text"
@@ -69,12 +76,13 @@ export function EditMessageDialog({
                                         Wiadomość:
                                     </FormLabel>
                                     <FormControl>
-                                        <Input defaultValue={text} {...field} />
+                                        <Input {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
+                        <FormMessage />
                     </form>
                 </Form>
                 <DialogFooter>
@@ -83,7 +91,7 @@ export function EditMessageDialog({
                             Anulować
                         </Button>
                     </DialogClose>
-                    <Button form="addMessageForm" size={"sm"} type="submit">
+                    <Button form="editMessageForm" size={"sm"} type="submit">
                         Zapisz zmiany
                     </Button>
                 </DialogFooter>

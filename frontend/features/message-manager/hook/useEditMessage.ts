@@ -1,4 +1,4 @@
-import { QueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 interface EditMessageProp {
@@ -31,11 +31,11 @@ async function EditMessageRequest({
 }
 
 export const useEditMessage = () => {
-    const queryClient = new QueryClient();
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: EditMessageRequest,
         onSuccess: (data) => {
-            queryClient.invalidateQueries({ queryKey: ["get-messeges"] });
+            queryClient.invalidateQueries({ queryKey: ["messages"] });
             toast.success(`✅ Wiadomość zmieniona na: ${data.text}`);
         },
         onError: (error) => {
